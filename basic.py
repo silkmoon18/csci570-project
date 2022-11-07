@@ -15,9 +15,9 @@ MISMATCH_PENALTY = {
     'GT': 110, 'TG': 110,
 }
 
-# get a penalty
+# get penalty
 def get_penalty(c1: str, c2: str) -> int:
-    if not c1 and not c2:
+    if not c1 and not c2 or c1 == '_' or c2 == '_':
         return GAP_PENALTY
     if c1 == c2:
         return 0
@@ -47,9 +47,9 @@ def process_memory():
     memory_consumed = int(memory_info.rss / 1024)
     return memory_consumed
 
-# basic solution
-def solve_alignment(string1: str, string2: str) -> dict:
-    n, m = len(string1), len(string2)
+# solution
+def solve_alignment(x: str, y: str) -> dict:
+    n, m = len(x), len(y)
     opt = [[0 for _ in range(n + 1)] for _ in range(m + 1)] 
  
     for i in range(n + 1): 
@@ -60,28 +60,28 @@ def solve_alignment(string1: str, string2: str) -> dict:
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             opt[j][i] = min(
-                get_penalty(string1[i - 1], string2[j - 1]) + opt[j - 1][i - 1],
+                get_penalty(x[i - 1], y[j - 1]) + opt[j - 1][i - 1],
                 GAP_PENALTY + opt[j - 1][i],
                 GAP_PENALTY + opt[j][i - 1]
                 )
     
     alignment1, alignment2 = '', ''
-    # i, j = n, m
-    # while i > 0 or j > 0:
-    #     value = opt[j][i]
-    #     if value == get_penalty(string1[i - 1], string2[j - 1]) + opt[j - 1][i - 1]:
-    #         alignment1 = string1[i - 1] + alignment1
-    #         alignment2 = string2[j - 1] + alignment2
-    #         i -= 1
-    #         j -= 1
-    #     elif value == GAP_PENALTY + opt[j - 1][i]:
-    #         alignment1 = string1[i - 1] + alignment1
-    #         alignment2 = '_' + alignment2
-    #         i -= 1
-    #     elif value == GAP_PENALTY + opt[j][i - 1]:
-    #         alignment1 = '_' + alignment1
-    #         alignment2 = string2[j - 1] + alignment2
-    #         j -= 1
+    i, j = n, m
+    while i > 0 or j > 0:
+        value = opt[j][i]
+        if value == get_penalty(x[i - 1], y[j - 1]) + opt[j - 1][i - 1]:
+            alignment1 = x[i - 1] + alignment1
+            alignment2 = y[j - 1] + alignment2
+            i -= 1
+            j -= 1
+        elif value == GAP_PENALTY + opt[j - 1][i]:
+            alignment1 = '_' + alignment1
+            alignment2 = y[j - 1] + alignment2
+            j -= 1
+        elif value == GAP_PENALTY + opt[j][i - 1]:
+            alignment1 = x[i - 1] + alignment1
+            alignment2 = '_' + alignment2
+            i -= 1
     
     result = {
         'cost': opt[-1][-1],
@@ -98,8 +98,8 @@ def try_get_argv(index, defualt):
         return defualt
 
 def main():
-    input_file = try_get_argv(1, 'SampleTestCases/input3.txt')
-    output_file = try_get_argv(2, 'test/output.txt')
+    input_file = try_get_argv(1, 'SampleTestCases/input5.txt')
+    output_file = try_get_argv(2, 'test/basic-output.txt')
     start_time = time.time()
 
     strings = construct_strings(input_file)
@@ -111,6 +111,7 @@ def main():
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     with open(output_file, 'w') as f:
         f.write('{}\n{}\n{}\n{}\n{}'.format(solution['cost'], solution['alignments'][0], solution['alignments'][1], time_used, memory_used))
+
 
 
 if __name__ == "__main__":
