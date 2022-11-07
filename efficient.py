@@ -130,7 +130,7 @@ def try_get_argv(index, defualt):
 def main():
     sys.setrecursionlimit(100000)
 
-    input_file = try_get_argv(1, 'SampleTestCases/input5.txt')
+    input_file = try_get_argv(1, 'SampleTestCases/input4.txt')
     output_file = try_get_argv(2, 'test/efficient-output.txt')
     
     start_time = time.time()
