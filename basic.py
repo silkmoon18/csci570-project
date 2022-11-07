@@ -1,8 +1,8 @@
 import os
 import sys
-import psutil
 import time
 
+import psutil
 
 # penalties
 GAP_PENALTY = 30
@@ -25,7 +25,7 @@ def get_penalty(c1: str, c2: str) -> int:
     return MISMATCH_PENALTY[c1 + c2]
 
 # construct the 2 strings from a file
-def construct_strings(path: str) -> list[str]:
+def construct_strings(path: str) -> list:
     result = []
     with open(path) as f:
         lines = f.read().splitlines()

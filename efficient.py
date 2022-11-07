@@ -33,7 +33,7 @@ def calculate_cost(x: str, y: str) -> int:
     return result
 
 # construct the 2 strings from a file
-def construct_strings(path: str) -> list[str]:
+def construct_strings(path: str) -> list:
     result = []
     with open(path) as f:
         lines = f.read().splitlines()
@@ -56,7 +56,7 @@ def process_memory():
     return memory_consumed
 
 # get costs
-def get_costs(x: str, y: str) -> list[int]:
+def get_costs(x: str, y: str) -> list:
     n, m = len(x), len(y)
     opt = [[0 for _ in range(2)] for _ in range(m + 1)] 
  
@@ -82,7 +82,7 @@ def get_costs(x: str, y: str) -> list[int]:
     
 
 # solution
-def solve_alignment(x: str, y: str) -> list[str]:
+def solve_alignment(x: str, y: str) -> list:
     n, m = len(x), len(y)
     if not x and not y:
         return [x, y]
