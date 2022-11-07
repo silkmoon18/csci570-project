@@ -98,8 +98,9 @@ def try_get_argv(index, defualt):
         return defualt
 
 def main():
-    input_file = try_get_argv(1, 'SampleTestCases/input5.txt')
+    input_file = try_get_argv(1, 'SampleTestCases/input1.txt')
     output_file = try_get_argv(2, 'test/basic-output.txt')
+    
     start_time = time.time()
 
     strings = construct_strings(input_file)

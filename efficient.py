@@ -132,6 +132,7 @@ def main():
 
     input_file = try_get_argv(1, 'SampleTestCases/input5.txt')
     output_file = try_get_argv(2, 'test/efficient-output.txt')
+    
     start_time = time.time()
 
     strings = construct_strings(input_file)
